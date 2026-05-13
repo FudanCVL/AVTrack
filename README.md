@@ -7,6 +7,7 @@
 [![Project Page](https://img.shields.io/badge/Project-Page-2563eb)](https://fudancvl.github.io/AVTrack/)
 [![Paper](https://img.shields.io/badge/Paper-PDF-b31b1b)](#)
 [![arXiv](https://img.shields.io/badge/arXiv-Preprint-b31b1b)](#)
+[![Dataset on 🤗](https://img.shields.io/badge/Dataset-FudanCVL%2FAVTrack-ffd21e)](https://huggingface.co/datasets/FudanCVL/AVTrack)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
 
@@ -165,9 +166,16 @@ cp .env.example .env
 
 ## Dataset
 
-> **Download**: TBD — coming soon. (Place the unpacked directory and set `AVTRACK_DATA_ROOT` to point to it.)
+The dataset is hosted on Hugging Face: **[FudanCVL/AVTrack](https://huggingface.co/datasets/FudanCVL/AVTrack)**.
 
-Set `AVTRACK_DATA_ROOT` to the directory containing:
+```bash
+# Download and unpack
+hf download FudanCVL/AVTrack AVTrack.zip --repo-type dataset --local-dir .
+unzip AVTrack.zip -d avtrack_data
+export AVTRACK_DATA_ROOT=$PWD/avtrack_data
+```
+
+After unpacking, `AVTRACK_DATA_ROOT` should contain:
 
 ```
 $AVTRACK_DATA_ROOT/
