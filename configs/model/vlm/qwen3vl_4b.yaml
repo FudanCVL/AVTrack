@@ -1,0 +1,5 @@
+name: Qwen3-VL-4B-Instruct
+# Defaults to the HuggingFace repo id; override with a local path via env var
+# or CLI: python scripts/run_inference.py model.vlm.path=/local/qwen3vl-4b
+path: ${oc.env:QWEN3VL_4B_PATH,Qwen/Qwen3-VL-4B-Instruct}
+type: local

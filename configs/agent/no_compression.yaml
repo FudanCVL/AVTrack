@@ -1,0 +1,7 @@
+defaults:
+  - base
+  - _self_
+
+name: no_compression
+compression:
+  enabled: false

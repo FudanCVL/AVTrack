@@ -1,0 +1,10 @@
+defaults:
+  - base
+  - _self_
+
+name: fix_window
+compression:
+  enabled: false
+window:
+  mode: fixed
+  fixed_size_seconds: 8.0

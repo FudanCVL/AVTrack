@@ -1,0 +1,17 @@
+# AVTrack default (full method): compression + speech-boundary windows +
+# VLM global matching + Mossformer2 speech separation.
+name: base
+type: sep
+compression:
+  enabled: true
+  threshold: 0.35
+window:
+  mode: speech_boundary
+  fixed_size_seconds: 8.0
+global:
+  method: vlm
+separation:
+  enabled: true
+thresholds:
+  iou_matching: 0.3
+  vlm_bbox_scale: 1000

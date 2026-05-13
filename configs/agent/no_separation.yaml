@@ -1,0 +1,9 @@
+defaults:
+  - base
+  - _self_
+
+# Ablation: disable Mossformer2 speech separation.
+name: no_separation
+type: base
+separation:
+  enabled: false

@@ -1,0 +1,3 @@
+name: mossformer2
+model_id: iic/speech_mossformer2_separation_temporal_8k
+sample_rate: 8000

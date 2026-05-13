@@ -1,0 +1,7 @@
+metrics:
+  - HOTA
+  - DetA
+  - AssA
+  - IDF1
+  - MOTA
+with_jf: false

@@ -1,0 +1,8 @@
+defaults:
+  - base
+  - _self_
+
+name: face
+type: face
+global:
+  method: face

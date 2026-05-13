@@ -1,0 +1,3 @@
+name: Qwen3-VL-8B-Instruct
+path: ${oc.env:QWEN3VL_8B_PATH,Qwen/Qwen3-VL-8B-Instruct}
+type: local

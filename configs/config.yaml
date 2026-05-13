@@ -1,0 +1,23 @@
+defaults:
+  - model/asr: whisper_large
+  - model/vlm: qwen3vl_4b
+  - model/tracker: sam3
+  - model/speaker: ecapa
+  - model/separator: mossformer2
+  - agent: base
+  - data: avtrack
+  - eval: default
+  - _self_
+
+seed: 42
+device: cuda:0
+
+output_dir: outputs/${agent.name}
+
+inference:
+  mode: single_gpu
+  patch_counts: 8
+  patch_idx: 0
+  max_frame_count: 30
+  gpu_list: [0, 1, 2, 3, 4, 5]
+  subset_file: null  # optional: path to txt file with video names to process

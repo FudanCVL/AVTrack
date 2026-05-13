@@ -1,0 +1,2 @@
+name: whisper-small
+path: ${oc.env:WHISPER_SMALL_PATH,openai/whisper-small}

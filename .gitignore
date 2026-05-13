@@ -1,0 +1,36 @@
+# Outputs and logs
+outputs/
+logs/
+.hydra/
+wandb/
+
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Local data and checkpoints
+data/
+checkpoints/
+
+# Heavy demo videos (project page hosts the GIF version)
+media/*.mp4
+
+# Private workspace
+archive/
+plan/
+.claude/
+CLAUDE.md
