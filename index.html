@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="title" content="AVTrack: Audio-Visual Tracking in Human-centric Complex Scenes">
+  <meta name="description" content="AVTrack is a human-centric audio-visual instance segmentation dataset capturing dynamic real-world scenes with camera motion, occlusions, and position changes. ICML 2026.">
+  <meta name="keywords" content="audio-visual, person tracking, instance segmentation, multimodal, dataset, ICML 2026, AVTrack">
+  <meta name="author" content="Yaoting Wang">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AVTrack: Audio-Visual Tracking in Human-centric Complex Scenes">
+  <meta property="og:description" content="A human-centric audio-visual instance segmentation dataset for dynamic real-world scenes.">
+  <meta property="og:image" content="static/images/teaser.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AVTrack: Audio-Visual Tracking in Human-centric Complex Scenes">
+  <meta name="twitter:description" content="A human-centric audio-visual instance segmentation dataset for dynamic real-world scenes.">
+  <meta name="twitter:image" content="static/images/teaser.png">
+
+  <meta name="citation_title" content="AVTrack: Audio-Visual Tracking in Human-centric Complex Scenes">
+  <meta name="citation_author" content="Wang, Yaoting">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="ICML 2026">
+
+  <meta name="theme-color" content="#2563eb">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+  <title>AVTrack: Audio-Visual Tracking in Human-centric Complex Scenes (ICML 2026)</title>
+
+  <link rel="icon" type="image/svg+xml" href="static/images/favicon.svg?v=2">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+
+  <style>
+    /* Full-bleed video hero */
+    .avtrack-hero {
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+      isolation: isolate;
+      background: #0b0b10;
+    }
+    .avtrack-hero .hero-body {
+      position: relative;
+      z-index: 2;
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+    .avtrack-hero .hero-bg-video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      filter: saturate(1.05);
+    }
+    /* Subtle gradient — GIF stays visible, text still legible via shadow */
+    .avtrack-hero .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.45) 80%),
+        linear-gradient(180deg, rgba(0,0,0,0.20) 0%, rgba(0,0,0,0.45) 100%);
+      z-index: 1;
+    }
+    /* Headline: white + drop shadow + gradient accent */
+    .avtrack-hero .publication-title {
+      color: #ffffff !important;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      text-shadow: 0 2px 18px rgba(0,0,0,0.55);
+      margin-bottom: 1.25rem !important;
+    }
+    .avtrack-hero .publication-title .accent {
+      background: linear-gradient(90deg, #ffd166, #ff9f1c);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .avtrack-hero .publication-authors,
+    .avtrack-hero .publication-authors * {
+      color: #f5f5f5 !important;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.45);
+    }
+    .avtrack-hero .publication-authors a { color: #ffd166 !important; }
+    .avtrack-hero .publication-authors a:hover { color: #fff !important; }
+    /* Venue pill */
+    .avtrack-hero .venue-pill {
+      display: inline-block;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.35);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-shadow: none !important;
+    }
+    .avtrack-hero .button.is-dark {
+      background-color: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.45);
+      color: #fff;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      font-weight: 600;
+    }
+    .avtrack-hero .button.is-dark:hover {
+      background-color: rgba(255,255,255,0.22);
+      color: #fff;
+    }
+    .figure-block img {
+      width: 100%;
+      max-width: 1200px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+    .figure-block.is-medium img { max-width: 780px; }
+    .figure-caption {
+      margin-top: 0.75rem;
+      color: #555;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+    /* Updates timeline */
+    .updates-section { text-align: left; }
+    .updates-section .title { margin-bottom: 1rem !important; }
+    .updates-scroll {
+      max-height: 240px;
+      overflow-y: auto;
+      padding: 0.25rem 1rem 0.25rem 0;
+      border-left: 3px solid #2563eb;
+    }
+    .updates-scroll::-webkit-scrollbar { width: 8px; }
+    .updates-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1; border-radius: 4px;
+    }
+    .updates-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    .updates-list {
+      list-style: none;
+      padding: 0 0 0 1rem;
+      margin: 0;
+    }
+    .updates-list li {
+      display: flex;
+      gap: 1rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    .updates-list li:last-child { border-bottom: 0; }
+    .updates-list .date {
+      flex: 0 0 110px;
+      font-weight: 600;
+      color: #2563eb;
+    }
+    /* Dataset comparison table */
+    .ds-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    .ds-table th, .ds-table td {
+      padding: 0.55rem 0.6rem;
+      border-bottom: 1px solid #e5e5e5;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .ds-table th { background: #f5f7fa; font-weight: 600; }
+    .ds-table td.task-cell, .ds-table td.dataset-cell { text-align: left; }
+    .ds-table tr.ours { background: #e8f0fe; font-weight: 600; }
+    .ds-table .ok { color: #16a34a; }
+    .ds-table .no { color: #d1d5db; }
+    .ds-section-divider td {
+      background: #fafafa;
+      border-top: 2px solid #d1d5db;
+      border-bottom: 2px solid #d1d5db;
+    }
+    /* Team */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .team-card { text-align: center; }
+    .team-card a { color: inherit; text-decoration: none; }
+    .team-card a:hover .team-name { color: #2563eb; }
+    .team-photo {
+      width: 130px; height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 0.75rem;
+      display: block;
+      background: linear-gradient(135deg, #6366f1, #2563eb);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    }
+    .team-photo.placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .team-name { font-weight: 600; font-size: 1.05rem; }
+    .team-affil { color: #666; font-size: 0.9rem; margin-top: 0.2rem; }
+  </style>
+</head>
+<body>
+
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <main id="main-content">
+
+  <!-- ============== HERO with demo_grid GIF background ============== -->
+  <section class="hero avtrack-hero">
+    <img class="hero-bg-video" src="static/images/demo_grid_43x20.gif?v=2"
+         alt="AVTrack dataset montage (43x20 grid of speakers)">
+    <div class="hero-overlay"></div>
+
+    <div class="hero-body">
+      <div class="container is-max-widescreen">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <div style="margin-bottom: 1.25rem;">
+              <span class="venue-pill">ICML&nbsp;2026</span>
+            </div>
+
+            <h1 class="title is-1 publication-title">
+              <span class="accent">AVTrack</span>:
+              Audio-Visual Tracking in<br>Human-centric Complex Scenes
+            </h1>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://yaotingwangofficial.github.io" target="_blank">Yaoting Wang</a>,</span>
+              <span class="author-block">Yun Zhou,</span>
+              <span class="author-block">Zipei Zhang,</span>
+              <span class="author-block">Henghui Ding</span>
+            </div>
+
+            <div class="is-size-6 publication-authors" style="margin-top: 0.4em; opacity: 0.85;">
+              <span class="author-block">
+                Institute of Big Data, College of CS &amp; AI, Fudan University
+              </span>
+            </div>
+
+            <div class="column has-text-centered" style="margin-top: 1.5em;">
+              <div class="publication-links">
+                <!-- TODO: arXiv 链接 -->
+                <span class="link-block">
+                  <a href="#" target="_blank"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#" target="_blank"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="ai ai-arxiv"></i></span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://github.com/yaotingwangofficial/AVTrack" target="_blank"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <!-- TODO: 数据集下载链接 -->
+                <span class="link-block">
+                  <a href="#" target="_blank"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-database"></i></span>
+                    <span>Dataset</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== Updates ============== -->
+  <section class="section updates-section">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3">Updates</h2>
+      <div class="updates-scroll">
+        <ul class="updates-list">
+          <li>
+            <span class="date">2026-05</span>
+            <span>AVTrack code, dataset, and project page released.</span>
+          </li>
+          <li>
+            <span class="date">2026-05</span>
+            <span><strong>AVTrack</strong> is accepted to <strong>ICML 2026</strong>. 🎉</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== Teaser figure ============== -->
+  <section class="section">
+    <div class="container is-max-widescreen figure-block">
+      <img src="static/images/teaser.png" alt="AVTrack teaser: challenging audio-visual tracking scenarios" loading="lazy" decoding="async">
+      <p class="figure-caption">
+        AVTrack benchmarks audio-visual person tracking under dynamic conditions —
+        camera motion, occlusion, scale and position changes — where existing
+        methods degrade substantially.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============== What is the task ============== -->
+  <section class="section">
+    <div class="container is-max-widescreen">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3 has-text-centered">What is the task?</h2>
+          <div class="content has-text-justified" style="font-size: 1.05rem;">
+            <p>
+              <strong>Audio-Visual Instance Segmentation for Human Speakers (Human-centric AVIS)</strong>
+              asks a model to identify and continuously segment each speaking person in a
+              video, frame by frame, by jointly reasoning over what is seen and what is
+              heard. Unlike active-speaker detection or audio-visual localization, the
+              output is a temporally consistent <em>mask track</em> per speaker — meaning
+              the model must answer three questions at once:
+            </p>
+            <ul>
+              <li><strong>Who is speaking?</strong> Use audio to identify the active speakers and their boundaries in time.</li>
+              <li><strong>Where are they?</strong> Use vision to segment each speaker at pixel precision in every frame.</li>
+              <li><strong>Are they the same person?</strong> Maintain identity across frames despite occlusion, motion, and viewpoint changes.</li>
+            </ul>
+            <p>
+              This makes the task a stress test for fine-grained cross-modal reasoning
+              under realistic, dynamic conditions.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== What is AVTrack ============== -->
+  <section class="section hero is-light">
+    <div class="container is-max-widescreen">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3 has-text-centered">What is AVTrack?</h2>
+          <div class="content has-text-justified" style="font-size: 1.05rem;">
+            <p>
+              <strong>AVTrack</strong> is a human-centric audio-visual instance segmentation
+              dataset built specifically for evaluation in <em>dynamic, real-world</em>
+              scenes. It complements existing AVIS benchmarks — which often rely on
+              static, single-speaker, or laboratory-style footage — with the kind of
+              messy conditions that real applications actually see.
+            </p>
+            <ul>
+              <li><strong>871 videos</strong>, 100% test split, averaging <strong>54 s</strong> per clip.</li>
+              <li><strong>Pixel-level instance masks</strong> with cross-frame identity (tracking), plus aligned audio.</li>
+              <li>Spans interviews, films, anime, operas, narrations, and stage performances — broad coverage of speakers, languages, and acoustic conditions.</li>
+              <li>Per-video <strong>challenge attributes</strong>: camera motion, occlusion, position changes, overlapping speech, and more.</li>
+              <li>Released with a <strong>training-free baseline (AVTracker)</strong> to bootstrap future research.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== Abstract ============== -->
+  <section class="section">
+    <div class="container is-max-widescreen">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Audio-visual speaker tracking aims to localize and track active speakers by
+              leveraging auditory and visual cues, enabling fine-grained, human-centric
+              scene understanding. This capability is essential for real-world applications
+              such as intelligent video editing, surveillance, and human–computer interaction.
+              However, existing datasets are largely limited to simple or homogeneous
+              audio-visual scenes with coarse annotations. Such oversimplified settings bias
+              evaluation toward static audio–visual co-occurrence, rather than rigorously
+              assessing robust spatiotemporal modeling and cross-modal reasoning in complex,
+              dynamic scenes.
+            </p>
+            <p>
+              To address these limitations, we introduce <strong>AVTrack</strong>, a
+              human-centric audio-visual instance segmentation (AVIS) dataset designed for
+              dynamic real-world scenarios. AVTrack features diverse and challenging
+              conditions, including camera motion, visual occlusions, and position changes.
+              Evaluations of representative AVIS methods on AVTrack reveal substantial
+              performance degradation, establishing AVTrack as a challenging benchmark for
+              robust human-centric audio-visual scene understanding in complex environments.
+              We further provide a simple yet effective baseline to facilitate future research.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== Dataset: video sources ============== -->
+  <section class="section">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 has-text-centered">Dataset Sources</h2>
+      <p class="content has-text-centered" style="max-width: 800px; margin: 0 auto 1.5rem;">
+        AVTrack is curated from a broad range of human-centric video sources spanning
+        interviews, films, anime, operas, narrations, and stage performances, providing
+        rich diversity in identity, language, motion, and acoustic conditions.
+      </p>
+      <div class="figure-block is-medium">
+        <img src="static/images/source.png" alt="AVTrack data source distribution" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== Dataset comparison table ============== -->
+  <section class="section hero is-light">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 has-text-centered">Comparison with Existing Datasets</h2>
+      <p class="content has-text-centered" style="max-width: 900px; margin: 0 auto 1.5rem;">
+        Comparison of non-laboratory datasets for audio-visual and visual-only tasks.
+        Only VIS and AVIS provide instance-level annotations.
+        AVTrack is the only one designed specifically for <em>human-centric AVIS</em>
+        evaluation in dynamic real-world scenes.
+      </p>
+      <div style="overflow-x: auto;">
+        <table class="ds-table">
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Dataset</th>
+              <th>Videos</th>
+              <th>Test&nbsp;(%)</th>
+              <th>Length</th>
+              <th>Domain</th>
+              <th>Anno.</th>
+              <th>Audio</th>
+              <th>Track</th>
+              <th>Publication</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="task-cell">ASD</td>
+              <td class="dataset-cell">AVA-ActiveSpeaker</td>
+              <td>262</td><td>41.6</td><td>529.0&nbsp;s</td><td>Human</td><td>bbox</td>
+              <td><span class="ok">✓</span></td><td><span class="no">✗</span></td>
+              <td>ICASSP&nbsp;'20</td>
+            </tr>
+            <tr>
+              <td class="task-cell">AVL</td>
+              <td class="dataset-cell">VGG-SS</td>
+              <td>5,158</td><td>100.0</td><td>10.0&nbsp;s</td><td>Common</td><td>bbox</td>
+              <td><span class="ok">✓</span></td><td><span class="no">✗</span></td>
+              <td>CVPR&nbsp;'21</td>
+            </tr>
+            <tr>
+              <td class="task-cell">AVOS</td>
+              <td class="dataset-cell">AVSBench-O</td>
+              <td>5,356</td><td>15.0</td><td>5.0&nbsp;s</td><td>Common</td><td>mask</td>
+              <td><span class="ok">✓</span></td><td><span class="no">✗</span></td>
+              <td>ECCV&nbsp;'22</td>
+            </tr>
+            <tr>
+              <td class="task-cell">AVSS</td>
+              <td class="dataset-cell">AVSBench-S</td>
+              <td>12,356</td><td>20.7</td><td>7.8&nbsp;s</td><td>Common</td><td>mask</td>
+              <td><span class="ok">✓</span></td><td><span class="no">✗</span></td>
+              <td>IJCV&nbsp;'25</td>
+            </tr>
+            <tr>
+              <td class="task-cell">Ref-AVS</td>
+              <td class="dataset-cell">RefAVS-Bench</td>
+              <td>4,002</td><td>20.4</td><td>10.0&nbsp;s</td><td>Common</td><td>mask</td>
+              <td><span class="ok">✓</span></td><td><span class="no">✗</span></td>
+              <td>ECCV&nbsp;'24</td>
+            </tr>
+            <tr>
+              <td class="task-cell">Ref-VOS</td>
+              <td class="dataset-cell">J-HMDB Sentences</td>
+              <td>928</td><td>100.0</td><td>1.0&nbsp;s</td><td>Human</td><td>mask</td>
+              <td><span class="no">✗</span></td><td><span class="no">✗</span></td>
+              <td>CVPR&nbsp;'18</td>
+            </tr>
+            <tr class="ds-section-divider"><td colspan="10" style="height: 4px; padding: 0;"></td></tr>
+            <tr>
+              <td class="task-cell" rowspan="3">VIS</td>
+              <td class="dataset-cell">YouTube-VIS</td>
+              <td>2,883</td><td>11.9</td><td>4.6&nbsp;s</td><td>Common</td><td>mask</td>
+              <td><span class="no">✗</span></td><td><span class="ok">✓</span></td>
+              <td>ICCV&nbsp;'19</td>
+            </tr>
+            <tr>
+              <td class="dataset-cell">OVIS</td>
+              <td>901</td><td>17.1</td><td>12.8&nbsp;s</td><td>Common</td><td>mask</td>
+              <td><span class="no">✗</span></td><td><span class="ok">✓</span></td>
+              <td>IJCV&nbsp;'22</td>
+            </tr>
+            <tr>
+              <td class="dataset-cell">YouMVOS</td>
+              <td>200</td><td>15.0</td><td>333.1&nbsp;s</td><td>Human</td><td>mask</td>
+              <td><span class="no">✗</span></td><td><span class="ok">✓</span></td>
+              <td>CVPR&nbsp;'22</td>
+            </tr>
+            <tr class="ds-section-divider"><td colspan="10" style="height: 4px; padding: 0;"></td></tr>
+            <tr>
+              <td class="task-cell" rowspan="2">AVIS</td>
+              <td class="dataset-cell">AVISeg</td>
+              <td>926</td><td>22.1</td><td>61.4&nbsp;s</td><td>Common</td><td>mask</td>
+              <td><span class="ok">✓</span></td><td><span class="ok">✓</span></td>
+              <td>CVPR&nbsp;'25</td>
+            </tr>
+            <tr class="ours">
+              <td class="dataset-cell"><strong>AVTrack (ours)</strong></td>
+              <td>871</td><td>100.0</td><td>54.0&nbsp;s</td><td><strong>Human</strong></td><td>mask</td>
+              <td><span class="ok">✓</span></td><td><span class="ok">✓</span></td>
+              <td>ICML&nbsp;'26</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="figure-caption" style="margin-top: 0.75rem;">
+        <strong>Test</strong>: proportion of test split.
+        <strong>Length</strong>: average video duration.
+        <strong>Anno.</strong>: annotation granularity.
+        <strong>Audio</strong>: whether audio is provided.
+        <strong>Track</strong>: whether cross-frame instance identity is available.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============== Dataset: challenges ============== -->
+  <section class="section">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 has-text-centered">Challenge Categories</h2>
+      <p class="content has-text-centered" style="max-width: 800px; margin: 0 auto 1.5rem;">
+        Each video is annotated with fine-grained challenge attributes. AVTrack exposes
+        models to systematic stress tests — camera motion, occlusion, position changes,
+        overlapping speech, and more — that conventional AVIS benchmarks rarely cover.
+      </p>
+      <div class="figure-block is-medium">
+        <img src="static/images/challenge.png" alt="Challenge category distribution in AVTrack" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== Baseline method ============== -->
+  <section class="section">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 has-text-centered">AVTracker: A Simple Baseline Workflow</h2>
+      <p class="content has-text-centered" style="max-width: 850px; margin: 0 auto 1.5rem;">
+        Alongside the dataset, we release <strong>AVTracker</strong>, a training-free
+        baseline workflow that chains speech recognition, visual instance tracking, and
+        a vision–language model into a four-stage pipeline. AVTracker operates on
+        speech-boundary windows and uses VLM reasoning for both local speaker–instance
+        grounding and global identity association, with optional speech separation for
+        overlapping audio.
+      </p>
+      <div class="figure-block">
+        <img src="static/images/model_track_agent.png" alt="AVTracker baseline workflow overview" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== Team ============== -->
+  <section class="section hero is-light">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 has-text-centered">Team</h2>
+      <p class="content has-text-centered" style="max-width: 800px; margin: 0 auto 2rem;">
+        Institute of Big Data, College of Computer Science and Artificial Intelligence,
+        Fudan University, Shanghai, China.
+      </p>
+      <div class="team-grid">
+        <div class="team-card">
+          <a href="https://yaotingwangofficial.github.io" target="_blank">
+            <img class="team-photo"
+                 src="https://raw.githubusercontent.com/yaotingwangofficial/yaotingwangofficial.github.io/refs/heads/main/media/yaoting.jpg"
+                 alt="Yaoting Wang" loading="lazy">
+            <div class="team-name">Yaoting Wang</div>
+            <div class="team-affil">Fudan University</div>
+          </a>
+        </div>
+        <div class="team-card">
+          <a href="https://henghuiding.com" target="_blank">
+            <img class="team-photo"
+                 src="https://henghuiding.com/assets/img/people/yunzhou.jpg"
+                 alt="Yun Zhou" loading="lazy">
+            <div class="team-name">Yun Zhou</div>
+            <div class="team-affil">Fudan University</div>
+          </a>
+        </div>
+        <div class="team-card">
+          <a href="https://henghuiding.com" target="_blank">
+            <img class="team-photo"
+                 src="https://henghuiding.com/assets/img/people/zipeizhang.jpg"
+                 alt="Zipei Zhang" loading="lazy">
+            <div class="team-name">Zipei Zhang</div>
+            <div class="team-affil">Fudan University</div>
+          </a>
+        </div>
+        <div class="team-card">
+          <a href="https://henghuiding.com" target="_blank">
+            <img class="team-photo"
+                 src="https://henghuiding.com/assets/img/HenghuiDing.jpg"
+                 alt="Henghui Ding" loading="lazy">
+            <div class="team-name">Henghui Ding</div>
+            <div class="team-affil">Fudan University</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== BibTeX ============== -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-widescreen content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i>
+          <span class="copy-text">Copy</span>
+        </button>
+      </div>
+<pre id="bibtex-code"><code>@inproceedings{wang2026avtrack,
+  title     = {AVTrack: Audio-Visual Tracking in Human-centric Complex Scenes},
+  author    = {Wang, Yaoting and others},
+  booktitle = {Proceedings of the 43rd International Conference on Machine Learning (ICML)},
+  year      = {2026},
+}</code></pre>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This page was built using the
+              <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>
+              which was adopted from the
+              <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              You are free to borrow the source code; please link back in your footer.
+              This website is licensed under a
+              <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
