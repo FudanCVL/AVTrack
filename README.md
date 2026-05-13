@@ -171,7 +171,7 @@ Set `AVTRACK_DATA_ROOT` to the directory containing:
 
 ```
 $AVTRACK_DATA_ROOT/
-├── avtract_meta.json
+├── avtrack_meta.json
 ├── Images/
 ├── Audios/
 ├── Instance_Masks/
