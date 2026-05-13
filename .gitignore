@@ -22,9 +22,10 @@ __pycache__/
 .idea/
 .DS_Store
 
-# Local data and checkpoints
-data/
-checkpoints/
+# Local data and checkpoints (anchored to repo root; do not match
+# `configs/data/` or `src/data/` which are part of the source tree)
+/data/
+/checkpoints/
 
 # Heavy demo videos (project page hosts the GIF version)
 media/*.mp4

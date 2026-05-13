@@ -1,0 +1,10 @@
+# Dataset paths. Override via environment variable or CLI:
+#   export AVTRACK_DATA_ROOT=/path/to/avtrack_data
+#   python scripts/run_inference.py data.image_dir=/custom/Images
+data_root: ${oc.env:AVTRACK_DATA_ROOT,./data}
+
+meta_file: ${.data_root}/avtrack_meta.json
+image_dir: ${.data_root}/Images
+audio_dir: ${.data_root}/Audios
+mask_dir: ${.data_root}/Instance_Masks
+gt_mask_merged_dir: ${.data_root}/Instance_Masks_merged
