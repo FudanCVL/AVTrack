@@ -5,8 +5,8 @@
 **ICML 2026**
 
 [![Project Page](https://img.shields.io/badge/Project-Page-2563eb)](https://fudancvl.github.io/AVTrack/)
-[![Paper](https://img.shields.io/badge/Paper-PDF-b31b1b)](#)
-[![arXiv](https://img.shields.io/badge/arXiv-Preprint-b31b1b)](#)
+[![Paper](https://img.shields.io/badge/Paper-PDF-b31b1b)](https://arxiv.org/abs/2606.02724)
+[![arXiv](https://img.shields.io/badge/arXiv-Preprint-b31b1b)](https://arxiv.org/abs/2606.02724)
 [![Dataset on 🤗](https://img.shields.io/badge/Dataset-FudanCVL%2FAVTrack-ffd21e)](https://huggingface.co/datasets/FudanCVL/AVTrack)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
