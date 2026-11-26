@@ -23,6 +23,7 @@ A human-centric audio-visual instance segmentation dataset for dynamic real-worl
 
 - **2026-05** &nbsp; AVTrack code, dataset, and project page released.
 - **2026-05** &nbsp; AVTrack is accepted to **ICML 2026** 🎉
+- **2026-11** &nbsp; Original high-frame-rate videos: [`Videos_high_fps.zip`](https://huggingface.co/datasets/FudanCVL/AVTrack/blob/main/Videos_high_fps.zip) on Hugging Face. See [`docs/high-fps/`](docs/high-fps/README.md) for how to match annotated images to video timestamps.
 
 ## Authors
 
@@ -187,6 +188,15 @@ $AVTRACK_DATA_ROOT/
 ```
 
 Individual paths can also be overridden directly, e.g. `data.image_dir=/custom/Images`.
+
+The original high-frame-rate videos are packaged separately as [`Videos_high_fps.zip`](https://huggingface.co/datasets/FudanCVL/AVTrack/blob/main/Videos_high_fps.zip) in the same repository. Download and extract them into the dataset directory:
+
+```bash
+hf download FudanCVL/AVTrack Videos_high_fps.zip --repo-type dataset --revision main --local-dir .
+unzip Videos_high_fps.zip -d "$AVTRACK_DATA_ROOT"
+```
+
+This adds `Videos/<category>/<clip>_merged.mp4` under `AVTRACK_DATA_ROOT`. The ZIP contains videos only; annotations remain in `AVTrack.zip`. See [`docs/high-fps/`](docs/high-fps/README.md) for the mapping from labeled images to MP4 timestamps.
 
 ## Models
 
